@@ -11,7 +11,7 @@ namespace plateRecognize
 {
     public static class TessaV2Extension
     {
-        public static void TessaV2(this string imagePath, string tessDataPath, string imageFolder, string saveFolder)
+        public static void StartProcess(this string imagePath, string tessDataPath, string imageFolder, string saveFolder)
         {
             try
             {
@@ -103,4 +103,5 @@ namespace plateRecognize
         }
 
     }
+
 }

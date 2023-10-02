@@ -16,8 +16,7 @@ namespace plateRecognize
             string imageFolder = "//2211.jpg";
             string saveFolder = "//res//" + "1.jpg";
 
-            imagePath.TessaV2(tessFodler, imageFolder, saveFolder);
-
+            imagePath.StartProcess(tessFodler, imageFolder, saveFolder); 
              
         }
           
