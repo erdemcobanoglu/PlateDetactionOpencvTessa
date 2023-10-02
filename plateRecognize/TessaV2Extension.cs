@@ -70,14 +70,15 @@ namespace plateRecognize
         {
             try
             {
+                string roiImagePath = tessDataPath + saveFolder;
+
                 using (var engine = new TesseractEngine(tessDataPath, "eng", EngineMode.Default))
                 {
                     engine.DefaultPageSegMode = PageSegMode.SingleBlock;
 
                     foreach (var contour in contours.ToArrayOfArray())
                     {
-                        var roi = new Mat(image, CvInvoke.BoundingRectangle(contour));
-                        string roiImagePath = tessDataPath + saveFolder;
+                        var roi = new Mat(image, CvInvoke.BoundingRectangle(contour)); 
                         CvInvoke.Imwrite(roiImagePath, roi);
 
                         using (var imgToRecognize = Pix.LoadFromFile(roiImagePath))
