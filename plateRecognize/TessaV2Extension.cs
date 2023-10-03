@@ -2,6 +2,7 @@
 using Emgu.CV.CvEnum;
 using Emgu.CV.Structure;
 using Emgu.CV.Util;
+using plateRecognize.Helper;
 using System;
 using System.Drawing;
 using Tesseract;
@@ -86,7 +87,13 @@ namespace plateRecognize
                             using (var page = engine.Process(imgToRecognize))
                             {
                                 string recognizedText = page.GetText();
-                                Console.WriteLine("License Plate: " + recognizedText.Trim());
+                                if (recognizedText.Trim().Length > 5)
+                                {
+                                    //Console.WriteLine("License Plate: " + recognizedText.Trim());
+                                    Console.WriteLine(LicensePlateValidator.ValidateIrishLicensePlate(recognizedText.Trim()));
+                                }
+                               
+                                
                             }
                         }
                     }
