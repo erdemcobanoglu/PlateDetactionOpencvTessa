@@ -33,7 +33,7 @@ namespace plateRecognize
                     VectorOfVectorOfPoint contours = new VectorOfVectorOfPoint();
                     CvInvoke.FindContours(edges, contours, null, RetrType.List, ChainApproxMethod.ChainApproxSimple);
                       
-                    PerformOcrSimpleProcessHelper(tessDataPath, imagePath);
+                    var date = PerformOcrSimpleProcessHelper(tessDataPath, imagePath);
                     PerformOcrComplexProcessHelper(tessDataPath, imagePath, image, contours, saveFolder); 
                 }
             }
@@ -72,6 +72,7 @@ namespace plateRecognize
             try
             {
                 string roiImagePath = tessDataPath + saveFolder;
+                LetterCounter letterCounter = new LetterCounter();
 
                 using (var engine = new TesseractEngine(tessDataPath, "eng", EngineMode.Default))
                 {
@@ -90,10 +91,11 @@ namespace plateRecognize
                                 if (recognizedText.Trim().Length > 5)
                                 {
                                     //Console.WriteLine("License Plate: " + recognizedText.Trim());
-                                    Console.WriteLine(LicensePlateValidator.ValidateIrishLicensePlate(recognizedText.Trim()));
-                                }
-                               
-                                
+                                    var _plate = LicensePlateValidator.ValidateIrishLicensePlate(recognizedText.Trim());
+                                    Console.WriteLine(LicensePlateValidator.ValidateIrishLicensePlate(_plate));
+                                     
+                                    //letterCounter.DisplayLetterCounts();
+                                }  
                             }
                         }
                     }
@@ -108,6 +110,7 @@ namespace plateRecognize
             }
             return string.Empty;
         }
+         
 
     }
 
