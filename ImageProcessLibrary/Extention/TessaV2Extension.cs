@@ -91,23 +91,17 @@ namespace plateRecognize
                         CvInvoke.Imwrite(roiImagePath, roi);
 
                         using (var imgToRecognize = Pix.LoadFromFile(roiImagePath))
+                        using (var page = engine.Process(imgToRecognize))
                         {
-                            using (var page = engine.Process(imgToRecognize))
-                            {
-                                string recognizedText = page.GetText().Trim();
-                                if (recognizedText.Length > 5)
-                                {
-                                    //Console.WriteLine("License Plate: " + recognizedText.Trim());
-                                    _plate = LicensePlateValidator.ValidateIrishLicensePlate(recognizedText.Trim());
+                            string recognizedText = page.GetText().Trim();
+                            if (recognizedText.Length > 5)
+                            { 
+                                _plate = LicensePlateValidator.ValidateIrishLicensePlate(recognizedText.Trim());
 
-                                    if (_plate != null) break;
-                                      
-                                    // Console.WriteLine(LicensePlateValidator.ValidateIrishLicensePlate(_plate));
-                                    
-                                    //letterCounter.DisplayLetterCounts();
-                                }  
+                                if (_plate != null) break; 
                             }
                         }
+
                     }
                 }
 
