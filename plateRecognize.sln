@@ -1,9 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31424.327
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33801.468
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "plateRecognize", "plateRecognize\plateRecognize.csproj", "{D99921CD-9CE5-4088-B3C8-753490FE178A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "plateRecognize", "plateRecognize\plateRecognize.csproj", "{D99921CD-9CE5-4088-B3C8-753490FE178A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlateRecognizeServiceV1", "PlateRecognizeServiceV1\PlateRecognizeServiceV1.csproj", "{30C6D5BE-0311-4F85-B81C-1B7337164EA5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageProcessLibrary", "ImageProcessLibrary\ImageProcessLibrary.csproj", "{A237B98C-F6C3-4CE6-9965-49FBCD04B3AD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model", "Model\Model.csproj", "{BB886620-5176-413B-9C03-68BEF7106B2E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +21,18 @@ Global
 		{D99921CD-9CE5-4088-B3C8-753490FE178A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D99921CD-9CE5-4088-B3C8-753490FE178A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D99921CD-9CE5-4088-B3C8-753490FE178A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{30C6D5BE-0311-4F85-B81C-1B7337164EA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{30C6D5BE-0311-4F85-B81C-1B7337164EA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{30C6D5BE-0311-4F85-B81C-1B7337164EA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{30C6D5BE-0311-4F85-B81C-1B7337164EA5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A237B98C-F6C3-4CE6-9965-49FBCD04B3AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A237B98C-F6C3-4CE6-9965-49FBCD04B3AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A237B98C-F6C3-4CE6-9965-49FBCD04B3AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A237B98C-F6C3-4CE6-9965-49FBCD04B3AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB886620-5176-413B-9C03-68BEF7106B2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB886620-5176-413B-9C03-68BEF7106B2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB886620-5176-413B-9C03-68BEF7106B2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB886620-5176-413B-9C03-68BEF7106B2E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -2,9 +2,11 @@
 using Emgu.CV.CvEnum;
 using Emgu.CV.Structure;
 using Emgu.CV.Util;
+using ImageProcessLibrary.Helper;
 using plateRecognize.Helper;
 using System;
 using System.Drawing;
+using System.Text;
 using Tesseract;
 using static System.Net.Mime.MediaTypeNames;
 
@@ -12,16 +14,44 @@ namespace plateRecognize
 {
     public static class TessaV2Extension
     {
-        public static void StartProcess(this string imagePath, string tessDataPath, string imageFolder, string saveFolder)
+        /// <summary>
+        /// Path to the file you want to create or open
+        /// </summary>
+        /// <param name="filePath"></param>
+        public static void CheckFileValidation()
         {
+            StringBuilder sb = new StringBuilder();
+
+            var filePath = ProjectPathHelper.GetProjectDirectory();
+            var folderName = "\\ImageSaveProcess";
+
+            sb.Append(filePath);
+            sb.Append(folderName);
+
+            
+            FileHelper.CreateIfNotExists(sb.ToString());
+        }
+
+        /// <summary>
+        /// Start Image Process
+        /// </summary>
+        /// <param name="imagePath"></param>
+        /// <param name="tessDataPath"></param>
+        /// <param name="imageFolder"></param>
+        /// <param name="saveFolder"></param>
+        /// <returns></returns>
+        public static string StartProcess(this string imagePath, string tessDataPath, string imageFolder, string saveFolder)
+        {
+            var result = string.Empty;
+            CheckFileValidation();
+
             try
             {
                 using (var image = CvInvoke.Imread(tessDataPath + imageFolder))
                 {
                     if (image.IsEmpty)
                     {
-                        Console.WriteLine("Error: Unable to load the image.");
-                        return;
+                        return "Error: Unable to load the image.";
                     }
 
                     var grayImage = new Mat();
@@ -34,17 +64,28 @@ namespace plateRecognize
                     CvInvoke.FindContours(edges, contours, null, RetrType.List, ChainApproxMethod.ChainApproxSimple);
                       
                     var date = PerformOcrSimpleProcessHelper(tessDataPath, imagePath);
-                    PerformOcrComplexProcessHelper(tessDataPath, imagePath, image, contours, saveFolder); 
+                    var  plate = PerformOcrComplexProcessHelper(tessDataPath, imagePath, image, contours, saveFolder);
+
+                    result = date == string.Empty ? plate : date;
                 }
             }
             catch (Exception ex)
             {
-                Console.Write("test");
+               // Log  Console.Write("test");
             }
+            return result;
         }
 
+        /// <summary>
+        /// PerformOcrSimpleProcessHelper
+        /// </summary>
+        /// <param name="tessDataPath"></param>
+        /// <param name="imagePath"></param>
+        /// <returns></returns>
         public static string PerformOcrSimpleProcessHelper(string tessDataPath, string imagePath)
         {
+            var result = string.Empty;
+
             try
             {
                 using (var tesseractEngine = new TesseractEngine(tessDataPath, "eng", EngineMode.Default))
@@ -55,20 +96,31 @@ namespace plateRecognize
                     {
                         using (var page = tesseractEngine.Process(img))
                         {
-                            return page.GetText();
+                            if (page.GetText().Length > 5)
+                                result = page.GetText();
                         }
                     }
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
-                return string.Empty;
+                // Log  Console.WriteLine(ex); 
             }
+            return result;
         }
 
+        /// <summary>
+        /// If PerformOcrSimpleProcessHelper cannot find it, let it run
+        /// </summary>
+        /// <param name="tessDataPath"></param>
+        /// <param name="imagePath"></param>
+        /// <param name="image"></param>
+        /// <param name="contours"></param>
+        /// <param name="saveFolder"></param>
+        /// <returns></returns>
         public static string PerformOcrComplexProcessHelper(string tessDataPath, string imagePath, Mat image, VectorOfVectorOfPoint contours, string saveFolder)
         {
+            var _plate = string.Empty;
             try
             {
                 string roiImagePath = tessDataPath + saveFolder;
@@ -84,32 +136,31 @@ namespace plateRecognize
                         CvInvoke.Imwrite(roiImagePath, roi);
 
                         using (var imgToRecognize = Pix.LoadFromFile(roiImagePath))
+                        using (var page = engine.Process(imgToRecognize))
                         {
-                            using (var page = engine.Process(imgToRecognize))
-                            {
-                                string recognizedText = page.GetText();
-                                if (recognizedText.Trim().Length > 5)
-                                {
-                                    //Console.WriteLine("License Plate: " + recognizedText.Trim());
-                                    var _plate = LicensePlateValidator.ValidateIrishLicensePlate(recognizedText.Trim());
-                                    Console.WriteLine(LicensePlateValidator.ValidateIrishLicensePlate(_plate));
-                                     
-                                    //letterCounter.DisplayLetterCounts();
-                                }  
+                            string recognizedText = page.GetText().Trim();
+                            if (recognizedText.Length > 5)
+                            { 
+                                _plate = LicensePlateValidator.ValidateIrishLicensePlate(recognizedText.Trim());
+
+                                if (_plate != null) break; 
                             }
                         }
+
                     }
                 }
 
-                CvInvoke.Imshow("License Plate Detection", image);
-                CvInvoke.WaitKey(0); 
+                // dont necessary show image 
+                //CvInvoke.Imshow("License Plate Detection", image);
+                //CvInvoke.WaitKey(0); 
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                // Log   Console.WriteLine(ex);
             }
-            return string.Empty;
+            return _plate;
         }
+
          
 
     }
