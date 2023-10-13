@@ -1,3 +1,4 @@
+using ImageProcessLibrary.Helper;
 using Microsoft.AspNetCore.Mvc;
 using plateRecognize;
 using plateRecognize.Helper;
@@ -28,9 +29,9 @@ namespace PlateRecognizeServiceV1.Controllers
             string imageFolder = "//tet-car11111.jpg"; // "//22111111.jpg"; // calisan ornek "//2211.jpg";  //tet-car11111.jpg
             string saveFolder = "//res//" + "1.jpg";
             try
-            {
+            { 
                 //var avvv = new LetterCounter();
-                 imagePath.StartProcess(tessFodler, imageFolder, saveFolder);
+                imagePath.StartProcess(tessFodler, imageFolder, saveFolder);
             }
             catch (Exception ex)
             {

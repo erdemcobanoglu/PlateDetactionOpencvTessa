@@ -4,7 +4,7 @@ using System.IO;
 
 namespace ImageProcessLibrary.Helper
 {
-    internal class Base64ToImageConverter
+    public class Base64ToImageConverter
     {
         public static Image ConvertBase64ToImage(string base64String)
         {

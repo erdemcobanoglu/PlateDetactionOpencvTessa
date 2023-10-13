@@ -2,9 +2,11 @@
 using Emgu.CV.CvEnum;
 using Emgu.CV.Structure;
 using Emgu.CV.Util;
+using ImageProcessLibrary.Helper;
 using plateRecognize.Helper;
 using System;
 using System.Drawing;
+using System.Text;
 using Tesseract;
 using static System.Net.Mime.MediaTypeNames;
 
@@ -12,9 +14,37 @@ namespace plateRecognize
 {
     public static class TessaV2Extension
     {
+        /// <summary>
+        /// Path to the file you want to create or open
+        /// </summary>
+        /// <param name="filePath"></param>
+        public static void CheckFileValidation()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            var filePath = ProjectPathHelper.GetProjectDirectory();
+            var folderName = "\\ImageSaveProcess";
+
+            sb.Append(filePath);
+            sb.Append(folderName);
+
+            
+            FileHelper.CreateIfNotExists(sb.ToString());
+        }
+
+        /// <summary>
+        /// Start Image Process
+        /// </summary>
+        /// <param name="imagePath"></param>
+        /// <param name="tessDataPath"></param>
+        /// <param name="imageFolder"></param>
+        /// <param name="saveFolder"></param>
+        /// <returns></returns>
         public static string StartProcess(this string imagePath, string tessDataPath, string imageFolder, string saveFolder)
         {
             var result = string.Empty;
+            CheckFileValidation();
+
             try
             {
                 using (var image = CvInvoke.Imread(tessDataPath + imageFolder))
@@ -46,6 +76,12 @@ namespace plateRecognize
             return result;
         }
 
+        /// <summary>
+        /// PerformOcrSimpleProcessHelper
+        /// </summary>
+        /// <param name="tessDataPath"></param>
+        /// <param name="imagePath"></param>
+        /// <returns></returns>
         public static string PerformOcrSimpleProcessHelper(string tessDataPath, string imagePath)
         {
             var result = string.Empty;
@@ -73,6 +109,15 @@ namespace plateRecognize
             return result;
         }
 
+        /// <summary>
+        /// If PerformOcrSimpleProcessHelper cannot find it, let it run
+        /// </summary>
+        /// <param name="tessDataPath"></param>
+        /// <param name="imagePath"></param>
+        /// <param name="image"></param>
+        /// <param name="contours"></param>
+        /// <param name="saveFolder"></param>
+        /// <returns></returns>
         public static string PerformOcrComplexProcessHelper(string tessDataPath, string imagePath, Mat image, VectorOfVectorOfPoint contours, string saveFolder)
         {
             var _plate = string.Empty;
@@ -115,6 +160,7 @@ namespace plateRecognize
             }
             return _plate;
         }
+
          
 
     }
