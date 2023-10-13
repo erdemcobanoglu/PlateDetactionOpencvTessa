@@ -20,9 +20,9 @@ namespace plateRecognize
         /// <param name="filePath"></param>
         public static void CheckFileValidation()
         {
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder(); 
 
-            var filePath = ProjectPathHelper.GetProjectDirectory();
+            var filePath = ProjectPathHelper.GetProjectDirectory(); 
             var folderName = "\\ImageSaveProcess";
 
             sb.Append(filePath);
@@ -30,6 +30,15 @@ namespace plateRecognize
 
             
             FileHelper.CreateIfNotExists(sb.ToString());
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="tessDataPath"></param>
+        public static void CheckTessaFileValidation(string tessDataPath)
+        {
+            var tessaFile = ProjectPathHelper.GetParentDirectory();
         }
 
         /// <summary>
@@ -44,6 +53,8 @@ namespace plateRecognize
         {
             var result = string.Empty;
             CheckFileValidation();
+            CheckTessaFileValidation(tessDataPath);
+            
 
             try
             {

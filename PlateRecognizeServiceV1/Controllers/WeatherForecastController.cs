@@ -24,14 +24,20 @@ namespace PlateRecognizeServiceV1.Controllers
         [HttpGet(Name = "GetWeatherForecast")]
         public IEnumerable<WeatherForecast> Get()
         {
+            // burda base64 olarak alicaz datayi 2) data yi isleme sokup kayit edicez.ConvertBase64ToImage and SaveFile kayittan sonra Imagepath donup onu alicaz ve isleme baslicaz. 
             string imagePath = "C://Users//erdem//Documents//test-pic//tessa-test2.jpg";
-            string tessFodler = "C://Users//erdem//source//repos//plateRecognize//plateRecognize//bin//Debug//net5.0//tessdata";
+
+            // tessaImageDosyamiz bunu kayitta kullaniyoruz
+            string tessaFodler = "C://Users//erdem//source//repos//plateRecognize//plateRecognize//bin//Debug//net5.0//tessdata";
+            
+
+
             string imageFolder = "//tet-car11111.jpg"; // "//22111111.jpg"; // calisan ornek "//2211.jpg";  //tet-car11111.jpg
             string saveFolder = "//res//" + "1.jpg";
             try
             { 
                 //var avvv = new LetterCounter();
-                imagePath.StartProcess(tessFodler, imageFolder, saveFolder);
+                imagePath.StartProcess(tessaFodler, imageFolder, saveFolder);
             }
             catch (Exception ex)
             {
@@ -47,6 +53,7 @@ namespace PlateRecognizeServiceV1.Controllers
             .ToArray();
         }
 
+        #region Test
         //[HttpGet(Name = "GetProcess")]
         //public IEnumerable<WeatherForecast> Help()
         //{
@@ -62,7 +69,7 @@ namespace PlateRecognizeServiceV1.Controllers
         //    }
         //    catch (Exception ex)
         //    {
-                 
+
         //    }
 
         //    return Enumerable.Range(1, 5).Select(index => new WeatherForecast
@@ -113,7 +120,8 @@ namespace PlateRecognizeServiceV1.Controllers
         //    //}
 
         //    return "Bitmap uploaded successfully.";
-        //}
+        //} 
+        #endregion
 
 
     }

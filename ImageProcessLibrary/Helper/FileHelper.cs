@@ -25,6 +25,7 @@ namespace ImageProcessLibrary.Helper
                 Console.WriteLine("File already exists.");
             }
 
+            #region MyRegion
             //if (!File.Exists(Path))
             //{
             //    // If the file doesn't exist, create it
@@ -36,8 +37,10 @@ namespace ImageProcessLibrary.Helper
             //else
             //{
             //    Console.WriteLine("File already exists.");
-            //}
-             
+            //} 
+            #endregion
+
         }
+         
     }
 }

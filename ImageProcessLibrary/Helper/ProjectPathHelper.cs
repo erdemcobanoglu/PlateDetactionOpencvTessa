@@ -18,6 +18,20 @@ namespace ImageProcessLibrary.Helper
             //}
             return Directory.GetCurrentDirectory();
         }
+        
+        public static string GetParentDirectory(string currentDirectory)
+        { 
+            string parentDirectory = Path.GetDirectoryName(currentDirectory);
+
+            if (parentDirectory != null)
+            {
+                return parentDirectory;
+            }
+            else
+            {
+                throw new InvalidOperationException("Cannot access parent directory. It doesn't exist.");
+            }
+        }
 
         private static bool IsWebApplication()
         {
