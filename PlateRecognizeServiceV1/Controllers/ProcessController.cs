@@ -27,7 +27,7 @@ namespace PlateRecognizeServiceV1.Controllers
                 var image = Base64ToImageConverter.ConvertBase64ToImage(model.Base64Data);
                 var imageFolderSavePath = "\\ImageSaveProcess";
                 // save image
-                Base64ToImageConverter.SaveImageToFile(image, ProjectPathHelper.GetProjectDirectory()+imageFolderSavePath);
+                var ImageName = Base64ToImageConverter.SaveImageToFile(image, ProjectPathHelper.GetProjectDirectory()+imageFolderSavePath);
 
 
                 // You can process the image bytes here or save them to a file, etc.

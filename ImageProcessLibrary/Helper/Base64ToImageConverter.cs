@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.IO;
+using System.Text;
 
 namespace ImageProcessLibrary.Helper
 {
@@ -28,25 +29,45 @@ namespace ImageProcessLibrary.Helper
             }
         }
 
-        public static void SaveImageToFile(Image image, string outputPath)
+        /// <summary>
+        /// Save Image And return image path 
+        /// </summary>
+        /// <param name="image"></param>
+        /// <param name="outputPath"></param>
+        /// <returns></returns>
+        public static string SaveImageToFile(Image image, string outputPath)
         {
+            Guid imageGuid = Guid.NewGuid();
+            StringBuilder sbResult = new StringBuilder(string.Empty);
+            StringBuilder sbImagePath = new StringBuilder(outputPath);
+             
             if (image != null)
             {
                 try
-                { 
+                {
                     // add image name 
                     //image.Save(outputPath);
-                    Bitmap bitmap = new Bitmap(image);
-                    bitmap.Save(outputPath);
 
-                    Console.WriteLine("Image saved to: " + outputPath);
+                    #region altta using ge aldim 
+                    //Bitmap bitmap = new Bitmap(image);
+                    //bitmap.Save(outputPath); 
+                    #endregion
+
+                    using (Bitmap bitmap = new Bitmap(image))
+                    {
+                        bitmap.Save(sbImagePath.Append("\\" + imageGuid).ToString() + ".jpg"); 
+                    }
+
+                    sbResult.Append(imageGuid);
                 }
                 catch (System.Runtime.InteropServices.ExternalException ex)
                 {
                     Console.WriteLine("GDI+ Error: " + ex.Message);
                     // Handle the exception as needed
                 }
+                
             }
+            return sbResult.ToString();
         }
 
         public static void SaveImageToPathBitmap(byte[] imageBytes, string outputPath)
