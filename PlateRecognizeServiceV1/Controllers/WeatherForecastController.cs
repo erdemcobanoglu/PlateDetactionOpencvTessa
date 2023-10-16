@@ -29,6 +29,7 @@ namespace PlateRecognizeServiceV1.Controllers
 
             // tessaImageDosyamiz bunu kayitta kullaniyoruz
             string tessaFodler = "C://Users//erdem//source//repos//plateRecognize//plateRecognize//bin//Debug//net5.0//tessdata";
+            string tessDataFolderName = "//tessdata";
             
 
 
@@ -37,7 +38,7 @@ namespace PlateRecognizeServiceV1.Controllers
             try
             { 
                 //var avvv = new LetterCounter();
-                imagePath.StartProcess(tessaFodler, imageFolder, saveFolder);
+                imagePath.StartProcess(tessDataFolderName, imageFolder, saveFolder);
             }
             catch (Exception ex)
             {

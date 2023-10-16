@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Reflection;
 using System.Web;
 
 namespace ImageProcessLibrary.Helper
@@ -18,7 +19,13 @@ namespace ImageProcessLibrary.Helper
             //}
             return Directory.GetCurrentDirectory();
         }
-        
+
+        public static string GetDebugFilePath()
+        {
+            Assembly assembly = Assembly.GetExecutingAssembly();
+            return assembly.Location;
+        }
+
         public static string GetParentDirectory(string currentDirectory)
         { 
             string parentDirectory = Path.GetDirectoryName(currentDirectory);
