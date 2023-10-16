@@ -34,13 +34,31 @@ namespace ImageProcessLibrary.Helper
             {
                 try
                 {
-                    image.Save(outputPath);
+
+                    //image.Save(outputPath);
+                    Bitmap bitmap = new Bitmap(image);
+                    bitmap.Save(outputPath);
+
                     Console.WriteLine("Image saved to: " + outputPath);
                 }
-                catch (Exception ex)
+                catch (System.Runtime.InteropServices.ExternalException ex)
                 {
-                    Console.WriteLine("Error saving image to file: " + ex.Message);
+                    Console.WriteLine("GDI+ Error: " + ex.Message);
+                    // Handle the exception as needed
                 }
+            }
+        }
+
+        public static void SaveImageToPathBitmap(byte[] imageBytes, string outputPath)
+        {
+            try
+            {
+                File.WriteAllBytes(outputPath, imageBytes);
+                Console.WriteLine("Image saved to: " + outputPath);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error saving image: " + ex.Message);
             }
         }
     }

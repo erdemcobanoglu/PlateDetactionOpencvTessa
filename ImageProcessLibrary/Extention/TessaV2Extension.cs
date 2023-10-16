@@ -72,7 +72,7 @@ namespace plateRecognize
 
             try
             {
-                using (var image = CvInvoke.Imread(tessDllPath + imageFolder))
+                using (var image = CvInvoke.Imread(imageFolderPath+ "\\tessa-test2.jpg"))
                 {
                     if (image.IsEmpty)
                     {

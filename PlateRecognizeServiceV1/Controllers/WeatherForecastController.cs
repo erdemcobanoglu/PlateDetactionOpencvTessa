@@ -30,10 +30,10 @@ namespace PlateRecognizeServiceV1.Controllers
             // tessaImageDosyamiz bunu kayitta kullaniyoruz
             string tessaFodler = "C://Users//erdem//source//repos//plateRecognize//plateRecognize//bin//Debug//net5.0//tessdata";
             string tessDataFolderName = "//tessdata";
-            
 
 
-            string imageFolder = "//tet-car11111.jpg"; // "//22111111.jpg"; // calisan ornek "//2211.jpg";  //tet-car11111.jpg
+
+            string imageFolder = "tessa-test2.jpg"; // "//tet-car11111.jpg"; // "//22111111.jpg"; // calisan ornek "//2211.jpg";  //tet-car11111.jpg
             string saveFolder = "//res//" + "1.jpg";
             try
             { 
