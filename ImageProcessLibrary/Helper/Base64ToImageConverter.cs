@@ -33,8 +33,8 @@ namespace ImageProcessLibrary.Helper
             if (image != null)
             {
                 try
-                {
-
+                { 
+                    // add image name 
                     //image.Save(outputPath);
                     Bitmap bitmap = new Bitmap(image);
                     bitmap.Save(outputPath);
