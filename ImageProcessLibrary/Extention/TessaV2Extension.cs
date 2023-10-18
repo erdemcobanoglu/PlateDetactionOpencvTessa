@@ -1,5 +1,6 @@
 ﻿using Emgu.CV;
 using Emgu.CV.CvEnum;
+using Emgu.CV.Dnn;
 using Emgu.CV.Structure;
 using Emgu.CV.Util;
 using ImageProcessLibrary.Helper;
@@ -58,21 +59,21 @@ namespace plateRecognize
         /// <param name="imageFolder"></param>
         /// <param name="saveFolder"></param>
         /// <returns></returns>
-        public static string StartProcess(this string imagePath, string tessDataPath, string imageFolder, string saveFolder)
+        public static string StartProcess(this string imageName, string tessDataPath, string roiSaveFolder)
         {
             var result = string.Empty;
             // "\\ImageSaveProcess"
             // "\\tessdata"
-
+            StringBuilder sbImagePath = new StringBuilder(); 
             var imageFolderSavePath = "\\ImageSaveProcess";
-            var imageFolderPath = CheckFileValidation(imageFolderSavePath);
-             
+            var imageFolderPath = CheckFileValidation(imageFolderSavePath); 
             var tessDllPath = CheckTessaFileValidation();
-            
+
+            sbImagePath.Append(imageFolderPath + "\\" + imageName);
 
             try
             {
-                using (var image = CvInvoke.Imread(imageFolderPath+ "\\tessa-test2.jpg"))
+                using (var image = CvInvoke.Imread(sbImagePath.ToString()))
                 {
                     if (image.IsEmpty)
                     {
@@ -89,10 +90,10 @@ namespace plateRecognize
                     CvInvoke.FindContours(edges, contours, null, RetrType.List, ChainApproxMethod.ChainApproxSimple);
                     
                     // start ocr 
-                    var date = PerformOcrSimpleProcessHelper(tessDllPath, imagePath);
-                    var  plate = PerformOcrComplexProcessHelper(tessDllPath, imagePath, image, contours, saveFolder);
+                    var simple = PerformOcrSimpleProcessHelper(tessDllPath, sbImagePath.ToString());
+                    var plate = PerformOcrComplexProcessHelper(tessDllPath, sbImagePath.ToString(), image, contours, roiSaveFolder);
 
-                    result = date == string.Empty ? plate : date;
+                    result = plate == string.Empty ? simple : plate;
                 }
             }
             catch (Exception ex)

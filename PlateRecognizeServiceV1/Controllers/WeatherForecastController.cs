@@ -38,7 +38,7 @@ namespace PlateRecognizeServiceV1.Controllers
             try
             { 
                 //var avvv = new LetterCounter();
-                imagePath.StartProcess(tessDataFolderName, imageFolder, saveFolder);
+               // imagePath.StartProcess(tessDataFolderName, imageFolder, saveFolder);
             }
             catch (Exception ex)
             {
@@ -53,6 +53,7 @@ namespace PlateRecognizeServiceV1.Controllers
             })
             .ToArray();
         }
+
 
         #region Test
         //[HttpGet(Name = "GetProcess")]

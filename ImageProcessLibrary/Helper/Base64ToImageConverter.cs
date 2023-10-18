@@ -57,8 +57,9 @@ namespace ImageProcessLibrary.Helper
                     {
                         bitmap.Save(sbImagePath.Append("\\" + imageGuid).ToString() + ".jpg"); 
                     }
-
+                     
                     sbResult.Append(imageGuid);
+                    sbResult.Append(".jpg");
                 }
                 catch (System.Runtime.InteropServices.ExternalException ex)
                 {
