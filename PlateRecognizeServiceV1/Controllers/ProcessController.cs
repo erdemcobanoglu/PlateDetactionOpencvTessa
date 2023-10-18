@@ -47,7 +47,7 @@ namespace PlateRecognizeServiceV1.Controllers
                 string tessDataFolderName = "//tessdata";
                   
                 // burayida config"den okuyup bir alt dosyada halletmek gerekir
-                // burayida configden okumaliyiz bence
+                // burayida configden okumaliyiz bence  // burasi islem icin kayir atiyor sadece
                 string roiSaveFolder = "\\res\\" + "1.jpg";
 
 
