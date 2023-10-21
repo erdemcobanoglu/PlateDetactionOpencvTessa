@@ -21,12 +21,12 @@ namespace PlateRecognizeServiceV1.Controllers
                 {
                     return BadRequest("Invalid base64 image data.");
                 }
-                 
+
                 var image = Base64ToImageConverter.ConvertBase64ToImage(model.Base64Data);
                 var imageFolderSavePath = "\\ImageSaveProcess";
                 // save image
-                var ImageName = Base64ToImageConverter.SaveImageToFile(image, ProjectPathHelper.GetProjectDirectory()+imageFolderSavePath);
-                  
+                var ImageName = Base64ToImageConverter.SaveImageToFile(image, ProjectPathHelper.GetProjectDirectory() + imageFolderSavePath);
+
                 return Ok(ImageName);
             }
             catch (Exception ex)
@@ -40,20 +40,10 @@ namespace PlateRecognizeServiceV1.Controllers
         {
             try
             {
-                // burda base64 olarak alicaz datayi 2) data yi isleme sokup kayit edicez.ConvertBase64ToImage and SaveFile kayittan sonra Imagepath donup onu alicaz ve isleme baslicaz. 
-                 
+                var getFolderInformation = new LocalInformationGetter().ReadJsonConfig("Localinfo.json");
 
-                // burayida config"den okuyup bir alt dosyada halletmek gerekir
-                string tessDataFolderName = "//tessdata";
-                  
-                // burayida config"den okuyup bir alt dosyada halletmek gerekir
-                // burayida configden okumaliyiz bence  // burasi islem icin kayir atiyor sadece
-                string roiSaveFolder = "\\res\\" + "1.jpg";
+                var result = model.Base64Data.ToString().StartProcess(getFolderInformation.TessDataFolderName, $"{getFolderInformation.RoiSaveFolder}{getFolderInformation.TempPictureName}");
 
-
-
-                var result = model.Base64Data.ToString().StartProcess(tessDataFolderName, roiSaveFolder);
-                 
                 return Ok(result);
             }
             catch (Exception ex)
