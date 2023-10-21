@@ -1,5 +1,6 @@
 ﻿using Emgu.CV;
 using Emgu.CV.CvEnum;
+using Emgu.CV.Dnn;
 using Emgu.CV.Structure;
 using Emgu.CV.Util;
 using ImageProcessLibrary.Helper;
@@ -18,18 +19,36 @@ namespace plateRecognize
         /// Path to the file you want to create or open
         /// </summary>
         /// <param name="filePath"></param>
-        public static void CheckFileValidation()
+        public static string CheckFileValidation(string folderName)
         {
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder(); 
 
-            var filePath = ProjectPathHelper.GetProjectDirectory();
-            var folderName = "\\ImageSaveProcess";
+            var filePath = ProjectPathHelper.GetProjectDirectory();  
 
             sb.Append(filePath);
             sb.Append(folderName);
 
             
             FileHelper.CreateIfNotExists(sb.ToString());
+            return sb.ToString(); 
+        }
+
+        /// <summary>
+        /// You must have the necessary documents for Tessa. The start of the process depends on this library
+        /// </summary>
+        /// <param name="tessDataPath"></param>
+        public static string CheckTessaFileValidation()
+        {
+            StringBuilder sb = new StringBuilder();
+             
+            var tessFolderName = "\\tessdata";
+            var filePath = ProjectPathHelper.GetProjectDirectory();
+
+            sb.Append(filePath);
+            sb.Append(tessFolderName);
+
+            return sb.ToString();
+            //FileHelper.CreateIfNotExists(sb.ToString());
         }
 
         /// <summary>
@@ -40,14 +59,21 @@ namespace plateRecognize
         /// <param name="imageFolder"></param>
         /// <param name="saveFolder"></param>
         /// <returns></returns>
-        public static string StartProcess(this string imagePath, string tessDataPath, string imageFolder, string saveFolder)
+        public static string StartProcess(this string imageName, string tessDataPath, string roiSaveFolder)
         {
             var result = string.Empty;
-            CheckFileValidation();
+            // "\\ImageSaveProcess"
+            // "\\tessdata"
+            StringBuilder sbImagePath = new StringBuilder(); 
+            var imageFolderSavePath = "\\ImageSaveProcess";
+            var imageFolderPath = CheckFileValidation(imageFolderSavePath); 
+            var tessDllPath = CheckTessaFileValidation();
+
+            sbImagePath.Append(imageFolderPath + "\\" + imageName);
 
             try
             {
-                using (var image = CvInvoke.Imread(tessDataPath + imageFolder))
+                using (var image = CvInvoke.Imread(sbImagePath.ToString()))
                 {
                     if (image.IsEmpty)
                     {
@@ -62,11 +88,12 @@ namespace plateRecognize
 
                     VectorOfVectorOfPoint contours = new VectorOfVectorOfPoint();
                     CvInvoke.FindContours(edges, contours, null, RetrType.List, ChainApproxMethod.ChainApproxSimple);
-                      
-                    var date = PerformOcrSimpleProcessHelper(tessDataPath, imagePath);
-                    var  plate = PerformOcrComplexProcessHelper(tessDataPath, imagePath, image, contours, saveFolder);
+                    
+                    // start ocr 
+                    var simple = PerformOcrSimpleProcessHelper(tessDllPath, sbImagePath.ToString());
+                    var plate = PerformOcrComplexProcessHelper(tessDllPath, sbImagePath.ToString(), image, contours, roiSaveFolder);
 
-                    result = date == string.Empty ? plate : date;
+                    result = plate == string.Empty ? simple : plate;
                 }
             }
             catch (Exception ex)

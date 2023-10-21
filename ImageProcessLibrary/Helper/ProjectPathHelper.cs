@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Reflection;
 using System.Web;
 
 namespace ImageProcessLibrary.Helper
@@ -17,6 +18,26 @@ namespace ImageProcessLibrary.Helper
             //    return Directory.GetCurrentDirectory();
             //}
             return Directory.GetCurrentDirectory();
+        }
+
+        public static string GetDebugFilePath()
+        {
+            Assembly assembly = Assembly.GetExecutingAssembly();
+            return assembly.Location;
+        }
+
+        public static string GetParentDirectory(string currentDirectory)
+        { 
+            string parentDirectory = Path.GetDirectoryName(currentDirectory);
+
+            if (parentDirectory != null)
+            {
+                return parentDirectory;
+            }
+            else
+            {
+                throw new InvalidOperationException("Cannot access parent directory. It doesn't exist.");
+            }
         }
 
         private static bool IsWebApplication()
