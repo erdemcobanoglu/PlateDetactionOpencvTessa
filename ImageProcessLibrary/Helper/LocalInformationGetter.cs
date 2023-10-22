@@ -8,6 +8,7 @@ namespace ImageProcessLibrary.Helper
 {
     public class LocalInformationGetter
     {
+        // ToDo Add Cache 
         static Localinfo ReadAppConfig()
         {
             //string setting1 = ConfigurationManager.AppSettings["Setting1"];

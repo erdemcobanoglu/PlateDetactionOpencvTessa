@@ -10,6 +10,7 @@ namespace Model
     {
         public string TessDataFolderName { get; set; }
         public string RoiSaveFolder { get; set; }
-        public string TempPictureName { get; set; } 
+        public string TempPictureName { get; set; }
+        public string ImageFolderSavePath { get; set; }
     }
 }

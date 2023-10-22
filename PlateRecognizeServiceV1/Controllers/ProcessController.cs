@@ -23,9 +23,12 @@ namespace PlateRecognizeServiceV1.Controllers
                 }
 
                 var image = Base64ToImageConverter.ConvertBase64ToImage(model.Base64Data);
-                var imageFolderSavePath = "\\ImageSaveProcess";
+
+                //var imageFolderSavePath = "\\ImageSaveProcess";
+                var getFolderInformation = new LocalInformationGetter().ReadJsonConfig("Localinfo.json");
+
                 // save image
-                var ImageName = Base64ToImageConverter.SaveImageToFile(image, ProjectPathHelper.GetProjectDirectory() + imageFolderSavePath);
+                var ImageName = Base64ToImageConverter.SaveImageToFile(image, ProjectPathHelper.GetProjectDirectory() + getFolderInformation.ImageFolderSavePath);
 
                 return Ok(ImageName);
             }
