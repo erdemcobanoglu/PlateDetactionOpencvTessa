@@ -151,7 +151,7 @@ namespace plateRecognize
             try
             {
                 string roiImagePath = tessDataPath + saveFolder;
-                LetterCounter letterCounter = new LetterCounter();
+                //LetterCounter letterCounter = new LetterCounter();
 
                 using (var engine = new TesseractEngine(tessDataPath, "eng", EngineMode.Default))
                 {

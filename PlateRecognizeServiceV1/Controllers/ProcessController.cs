@@ -24,9 +24,7 @@ namespace PlateRecognizeServiceV1.Controllers
 
                 var image = Base64ToImageConverter.ConvertBase64ToImage(model.Base64Data);
 
-                //var imageFolderSavePath = "\\ImageSaveProcess";
-
-                // burayi cocuklarla konusucaz!  cache neden gelmiyor.
+                //var imageFolderSavePath = "\\ImageSaveProcess"; 
                 var getFolderInformation = new LocalInformationGetter().CheckAndGetMemoryData("Localinfo.json"); //new LocalInformationGetter
 
                 // save image
@@ -44,8 +42,7 @@ namespace PlateRecognizeServiceV1.Controllers
         public async Task<IActionResult> ConvertImagetoPlate([FromBody] ImageTextModel model)
         {
             try
-            {
-                // burayi cocuklarla konusucaz! 
+            { 
                 var getFolderInformation = new LocalInformationGetter().CheckAndGetMemoryData("Localinfo.json"); //new LocalInformationGetter().ReadJsonConfig("Localinfo.json");
 
                 var result = model.Base64Data.ToString().StartProcess(getFolderInformation.TessDataFolderName, $"{getFolderInformation.RoiSaveFolder}{getFolderInformation.TempPictureName}");

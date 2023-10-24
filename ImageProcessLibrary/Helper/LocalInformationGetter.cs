@@ -21,7 +21,7 @@ namespace ImageProcessLibrary.Helper
             return new Model.Localinfo { };
         }
 
-        public Localinfo ReadJsonConfig(string jsonFileName)
+        private Localinfo ReadJsonConfig(string jsonFileName)
         {  
             var filePath = FileHelper.FindFileSubFolderInProjectDirectory(ProjectPathHelper.GetParentDirectory(ProjectPathHelper.GetProjectDirectory()), jsonFileName);
 
