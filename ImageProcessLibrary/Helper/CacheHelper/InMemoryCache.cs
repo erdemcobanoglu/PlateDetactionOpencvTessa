@@ -10,7 +10,8 @@ namespace ImageProcessLibrary.Helper.CacheHelper
     // Implement a basic in-memory cache
     internal class InMemoryCache : ICache
     {
-        private Dictionary<string, (object, DateTime)> cache = new Dictionary<string, (object, DateTime)>();
+        // If we do not make this static, the data will have to be re-added every time.
+        private static Dictionary<string, (object, DateTime)> cache = new Dictionary<string, (object, DateTime)>();
 
         public void Add(string key, object value, TimeSpan expiration)
         {

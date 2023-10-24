@@ -48,7 +48,7 @@ namespace ImageProcessLibrary.Helper
                 var localinfo = ReadJsonConfig(cacheKey);
 
                 // Value is not in the cache, so add it 
-                cache.Add(cacheKey, localinfo, TimeSpan.FromMinutes(1000000));
+                cache.Add(cacheKey, localinfo, TimeSpan.FromMinutes(60));
 
                 // Now, cachedValue will hold the newly added value
                 cachedValue = localinfo; 
