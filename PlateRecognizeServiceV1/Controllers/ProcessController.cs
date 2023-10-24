@@ -25,7 +25,9 @@ namespace PlateRecognizeServiceV1.Controllers
                 var image = Base64ToImageConverter.ConvertBase64ToImage(model.Base64Data);
 
                 //var imageFolderSavePath = "\\ImageSaveProcess";
-                var getFolderInformation = new LocalInformationGetter().ReadJsonConfig("Localinfo.json");
+
+                // burayi cocuklarla konusucaz!  cache neden gelmiyor.
+                var getFolderInformation = new LocalInformationGetter().CheckAndGetMemoryData("Localinfo.json"); //new LocalInformationGetter
 
                 // save image
                 var ImageName = Base64ToImageConverter.SaveImageToFile(image, ProjectPathHelper.GetProjectDirectory() + getFolderInformation.ImageFolderSavePath);
@@ -43,7 +45,8 @@ namespace PlateRecognizeServiceV1.Controllers
         {
             try
             {
-                var getFolderInformation = new LocalInformationGetter().ReadJsonConfig("Localinfo.json");
+                // burayi cocuklarla konusucaz! 
+                var getFolderInformation = new LocalInformationGetter().CheckAndGetMemoryData("Localinfo.json"); //new LocalInformationGetter().ReadJsonConfig("Localinfo.json");
 
                 var result = model.Base64Data.ToString().StartProcess(getFolderInformation.TessDataFolderName, $"{getFolderInformation.RoiSaveFolder}{getFolderInformation.TempPictureName}");
 
